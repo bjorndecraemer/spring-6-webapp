@@ -34,7 +34,7 @@ public class StartupBootstrap implements CommandLineRunner {
 
         Author ericEvans = new Author("Eric", "Evans");
         Author savedEric = authorRepository.save(ericEvans);
-        Book ddd = new Book("DDD", "Evans","12345");
+        Book ddd = new Book("DDD","12345");
 
         Book dddSaved = bookRepository.save(ddd);
         dddSaved.getAuthors().add(savedEric);
