@@ -2,6 +2,7 @@ package bjorn.springframework6.spring6webapp.domain;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -14,11 +15,12 @@ public class Book {
     private Long id;
     private String title;
     private String author;
-    private String publisher;
+    @ManyToOne( )
+    private Publisher publisher;
     private String isbn;
-    @ManyToMany()
+    @ManyToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinTable(name = "book_author", joinColumns = @JoinColumn(name = "book_id"), inverseJoinColumns = @JoinColumn(name = "author_id"))
-    private Set<Author> authors;
+    private Set<Author> authors = new HashSet<>();
 
     public Set<Author> getAuthors() {
         return authors;
@@ -31,10 +33,9 @@ public class Book {
     public Book() {
     }
 
-    public Book(String title, String author, String publisher, String isbn) {
+    public Book(String title, String author,  String isbn) {
         this.title = title;
         this.author = author;
-        this.publisher = publisher;
         this.isbn = isbn;
     }
 
@@ -62,11 +63,11 @@ public class Book {
         this.author = author;
     }
 
-    public String getPublisher() {
+    public Publisher getPublisher() {
         return publisher;
     }
 
-    public void setPublisher(String publisher) {
+    public void setPublisher(Publisher publisher) {
         this.publisher = publisher;
     }
 
@@ -84,7 +85,7 @@ public class Book {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", author='" + author + '\'' +
-                ", publisher='" + publisher + '\'' +
+                ", publisher=" + publisher +
                 ", isbn='" + isbn + '\'' +
                 ", authors=" + authors +
                 '}';
